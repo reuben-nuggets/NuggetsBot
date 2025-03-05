@@ -1,0 +1,17 @@
+name: Run Python Script
+
+on:
+  schedule:
+    - cron: "0 19 * * *" # Runs every hour
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+      - name: Run script
+        run: python main.py
