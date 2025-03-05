@@ -8,7 +8,7 @@ import requests
 average_stats = {}
 
 def get_previous_stats():
-    team = teamgamelog.TeamGameLog(1610612743)
+    team = teamgamelog.TeamGameLog(1610612743, timeout=60)
     most_recent_games = team.get_data_frames()[0].iloc[1:11]
     pts = 0
     fg_pct = 0
@@ -21,12 +21,12 @@ def get_previous_stats():
 
 previous_stats = get_previous_stats()
 
-team = teamgamelog.TeamGameLog(1610612743)
+team = teamgamelog.TeamGameLog(1610612743, timeout=60)
 most_recent_game = team.get_data_frames()[0].iloc[0]
-boxscores = boxscoretraditionalv3.BoxScoreTraditionalV3(most_recent_game.Game_ID)
+boxscores = boxscoretraditionalv3.BoxScoreTraditionalV3(most_recent_game.Game_ID, timeout=60)
 game_date = most_recent_game.GAME_DATE
 opp_team_abb = most_recent_game.MATCHUP.split(" ")[2]
-opp_team = teamgamelog.TeamGameLog(find_team_by_abbreviation(most_recent_game.MATCHUP.split(" ")[2])["id"])
+opp_team = teamgamelog.TeamGameLog(find_team_by_abbreviation(most_recent_game.MATCHUP.split(" ")[2])["id"], timeout=60)
 opp_team_data = opp_team.get_data_frames()[0]
 opp_team_game = opp_team_data.loc[opp_team_data["GAME_DATE"] == game_date].iloc[0]
 nuggets_players_score = boxscores.get_data_frames()[0].loc[boxscores.get_data_frames()[0]["teamTricode"] == "DEN"]
